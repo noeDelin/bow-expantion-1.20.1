@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "bow_expantion",
+	"version": "${version}",
+	"name": "Bow Expantion",
+	"description": "This mod gives you a new set of weapons",
+	"authors": [
+		"nonopaddle"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/bow_expantion/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.nonopaddle.bow_expantion.BowExpansion"
+		],
+		"client": [
+			"net.nonopaddle.bow_expantion.BowExpansionClient"
+		],
+		"fabric-datagen": [
+			"net.nonopaddle.bow_expantion.BowExpansionDataGenerator"
+		]
+	},
+	"mixins": [
+		"bow_expantion.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
