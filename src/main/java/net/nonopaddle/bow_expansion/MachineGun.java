@@ -35,9 +35,8 @@ import software.bernie.geckolib.util.RenderUtils;
 
 public class MachineGun extends BowItem implements /* Runnable, */ GeoItem {
 
-    private Thread arrowThrower;
     private final AtomicBoolean running = new AtomicBoolean(false);
-    private int interval = 2; // millis
+    private int interval = 40; // millis
 
     private World world;
     private LivingEntity user;
@@ -54,10 +53,8 @@ public class MachineGun extends BowItem implements /* Runnable, */ GeoItem {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             PlayerEntity player = (PlayerEntity) user;
             if (this.running.get()) {
-                if (server.getTicks() % interval == 0) {
-                    if (animationController != null)
-                        animationController.setAnimationSpeed(5);
-
+                if (server.getTicks() % interval == 0 && interval <=2) {
+                    //System.out.println("interval = " + interval);
                     if (!(player.getStackInHand(this.hand).getItem() instanceof MachineGun))
                         running.set(false);
 
@@ -71,16 +68,19 @@ public class MachineGun extends BowItem implements /* Runnable, */ GeoItem {
 
                         PersistentProjectileEntity arrow = arrowItem.createArrow(world, itemStack, player);
                         arrow.setPosition(player.getX(), user.getEyeY() - 0.5, user.getZ());
-                        arrow.setVelocity(player, player.getPitch(), player.getYaw(), 0.0f, 4f, 0f);
+                        arrow.setVelocity(player, player.getPitch(), player.getYaw(), 0.0f, 4f, 7.5f);
                         world.spawnEntity(arrow);
                     }
                     if (!player.getAbilities().creativeMode) {
                         itemStack.decrement(1);
                     }
                 }
+                if(interval > 2) interval--;
             } else {
-                if (animationController != null)
-                    animationController.setAnimationSpeed(0.001);
+                if(interval < 40) interval ++;
+            }
+            if (animationController != null) {
+                animationController.setAnimationSpeed((38-(interval-2)+0.001)/4);
             }
         });
     }
