@@ -12,21 +12,21 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "MIT",
-	"icon": "assets/bow_expantion/icon.png",
+	"icon": "assets/bow_expansion/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.nonopaddle.bow_expantion.BowExpansion"
+			"net.nonopaddle.bow_expansion.BowExpansion"
 		],
 		"client": [
-			"net.nonopaddle.bow_expantion.BowExpansionClient"
+			"net.nonopaddle.bow_expansion.BowExpansionClient"
 		],
 		"fabric-datagen": [
-			"net.nonopaddle.bow_expantion.BowExpansionDataGenerator"
+			"net.nonopaddle.bow_expansion.BowExpansionDataGenerator"
 		]
 	},
 	"mixins": [
-		"bow_expantion.mixins.json"
+		"bow_expansion.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.14.21",

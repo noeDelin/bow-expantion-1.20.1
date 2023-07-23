@@ -1,4 +1,4 @@
-package net.nonopaddle.bow_expantion;
+package net.nonopaddle.bow_expansion;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;

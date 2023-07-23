@@ -1,9 +1,9 @@
 {
 	"required": true,
-	"package": "net.nonopaddle.bow_expantion.mixin",
+	"package": "net.nonopaddle.bow_expansion.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin"
+		"BowExpansionMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

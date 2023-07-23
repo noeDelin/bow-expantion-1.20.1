@@ -1,4 +1,4 @@
-package net.nonopaddle.bow_expantion;
+package net.nonopaddle.bow_expansion;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
