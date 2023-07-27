@@ -1,4 +1,4 @@
-package net.nonopaddle.bow_expansion;
+package net.nonopaddle.bow_expansion.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -9,6 +9,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.nonopaddle.bow_expansion.BowExpansion;
 
 public class ModItemGroup {
     
@@ -17,6 +18,7 @@ public class ModItemGroup {
                 .icon(() -> new ItemStack(ModItems.MACHINE_GUN)).entries((DisplayContext, entries) -> {
                     // entrées
                     entries.add(ModItems.MACHINE_GUN);
+                    entries.add(ModItems.BOLT_ITEM);
                     //
                 }).build()
     );

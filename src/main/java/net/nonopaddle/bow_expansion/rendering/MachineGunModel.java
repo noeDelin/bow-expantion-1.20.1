@@ -1,6 +1,8 @@
-package net.nonopaddle.bow_expansion;
+package net.nonopaddle.bow_expansion.rendering;
 
 import net.minecraft.util.Identifier;
+import net.nonopaddle.bow_expansion.BowExpansion;
+import net.nonopaddle.bow_expansion.item.MachineGun;
 import software.bernie.geckolib.model.GeoModel;
 
 public class MachineGunModel extends GeoModel<MachineGun> {

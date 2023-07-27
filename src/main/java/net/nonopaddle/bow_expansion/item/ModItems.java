@@ -1,16 +1,21 @@
-package net.nonopaddle.bow_expansion;
+package net.nonopaddle.bow_expansion.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.nonopaddle.bow_expansion.BowExpansion;
 
 public class ModItems {
 
     //// ITEMS ////
     public static final Item MACHINE_GUN = registerItem("machine_gun", 
         new MachineGun(new FabricItemSettings())
+    );
+
+    public static final Item BOLT_ITEM = registerItem("bolt_item", 
+        new BoltItem(new FabricItemSettings())
     );
 
     //// BLOCKS ITEM

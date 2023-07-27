@@ -1,6 +1,8 @@
 package net.nonopaddle.bow_expansion;
 
 import net.fabricmc.api.ModInitializer;
+import net.nonopaddle.bow_expansion.item.ModItemGroup;
+import net.nonopaddle.bow_expansion.item.ModItems;
 import software.bernie.geckolib.GeckoLib;
 
 import org.slf4j.Logger;
