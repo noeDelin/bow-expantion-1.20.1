@@ -1,6 +1,7 @@
 package net.nonopaddle.bow_expansion;
 
 import net.minecraft.util.Identifier;
+import net.nonopaddle.bow_expansion.item.Longbow;
 import software.bernie.geckolib.model.GeoModel;
 
 public class LongbowModel extends GeoModel<Longbow>{

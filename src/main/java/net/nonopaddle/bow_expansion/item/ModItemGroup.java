@@ -19,6 +19,7 @@ public class ModItemGroup {
                     // entrées
                     entries.add(ModItems.MACHINE_GUN);
                     entries.add(ModItems.BOLT_ITEM);
+                    entries.add(ModItems.LONGBOW);
                     //
                 }).build()
     );

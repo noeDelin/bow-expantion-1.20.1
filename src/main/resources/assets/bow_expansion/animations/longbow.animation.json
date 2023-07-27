@@ -52,6 +52,7 @@
 			}
 		},
 		"longbow.animation.shoot": {
+			"loop": "hold_on_last_frame",
 			"animation_length": 0.08333,
 			"bones": {
 				"hook2": {
