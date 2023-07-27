@@ -17,6 +17,7 @@ public class ModItemGroup {
                 .icon(() -> new ItemStack(ModItems.MACHINE_GUN)).entries((DisplayContext, entries) -> {
                     // entrées
                     entries.add(ModItems.MACHINE_GUN);
+                    entries.add(ModItems.LONGBOW);
                     //
                 }).build()
     );
