@@ -14,7 +14,7 @@ public class ModItems {
     );
 
     public static final Item LONGBOW = registerItem("longbow", 
-    new LongBow(new FabricItemSettings())
+    new Longbow(new FabricItemSettings())
     );
 
     //// BLOCKS ITEM
