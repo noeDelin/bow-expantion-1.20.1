@@ -1,5 +1,6 @@
 {
     "item.bow_expansion.machine_gun": "machine gun",
     "item.bow_expansion.bolt_item": "bolt",
+    "item.bow_expansion.longbow": "longbow",
     "itemGroup.bow_expansion.bow_expansion_group": "Bow Expansion"
 }

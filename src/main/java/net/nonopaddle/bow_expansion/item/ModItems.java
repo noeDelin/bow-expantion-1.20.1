@@ -18,6 +18,10 @@ public class ModItems {
         new BoltItem(new FabricItemSettings())
     );
 
+    public static final Item LONGBOW = registerItem("longbow", 
+    new Longbow(new FabricItemSettings())
+    );
+
     //// BLOCKS ITEM
     /* public static final BlockItem SLIME_PAD_ITEM = registerBlockItem("slime_pad",
         new BlockItem(ModBlocks.EXEMPLE_DE_BLOCK, new FabricItemSettings())
