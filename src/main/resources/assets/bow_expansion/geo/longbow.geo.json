@@ -3,21 +3,21 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.longbow",
+				"identifier": "geometry.long_bow - Converted",
 				"texture_width": 64,
 				"texture_height": 64,
 				"visible_bounds_width": 4,
-				"visible_bounds_height": 1.5,
-				"visible_bounds_offset": [0, 0.25, 0]
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
 			},
 			"bones": [
 				{
-					"name": "longbow",
+					"name": "long_bow",
 					"pivot": [11.5, -0.5, -8]
 				},
 				{
 					"name": "mainhandle",
-					"parent": "longbow",
+					"parent": "long_bow",
 					"pivot": [-0.05, 0, 0.00274],
 					"cubes": [
 						{
@@ -25,11 +25,11 @@
 							"size": [1, 1, 16],
 							"uv": {
 								"north": {"uv": [2, 26], "uv_size": [-1, -16]},
-								"east": {"uv": [2, 26], "uv_size": [-1, -16]},
+								"east": {"uv": [27, 2], "uv_size": [-16, -2]},
 								"south": {"uv": [2, 26], "uv_size": [-1, -16]},
-								"west": {"uv": [2, 26], "uv_size": [-1, -16]},
+								"west": {"uv": [27, 2], "uv_size": [-16, -2]},
 								"up": {"uv": [1, 10], "uv_size": [1, 16]},
-								"down": {"uv": [1, 10], "uv_size": [1, 16]}
+								"down": {"uv": [1, 10], "uv_size": [2, 16]}
 							}
 						},
 						{
@@ -37,9 +37,9 @@
 							"size": [1.5, 1.5, 4.5],
 							"uv": {
 								"north": {"uv": [10, 15], "uv_size": [-2, -5]},
-								"east": {"uv": [8, 15], "uv_size": [2, -5]},
+								"east": {"uv": [21, 2], "uv_size": [-5, 2]},
 								"south": {"uv": [10, 15], "uv_size": [-2, -5]},
-								"west": {"uv": [10, 10], "uv_size": [-2, 5]},
+								"west": {"uv": [16, 4], "uv_size": [5, -2]},
 								"up": {"uv": [8, 10], "uv_size": [2, 5]},
 								"down": {"uv": [10, 15], "uv_size": [-2, -5]}
 							}
@@ -58,11 +58,11 @@
 							"rotation": [0, -22.5, 0],
 							"uv": {
 								"north": {"uv": [5, 17], "uv_size": [-1, -1]},
-								"east": {"uv": [5, 17], "uv_size": [-1, -5]},
+								"east": {"uv": [17, 13], "uv_size": [-5, -1]},
 								"south": {"uv": [5, 17], "uv_size": [-1, -5]},
-								"west": {"uv": [5, 17], "uv_size": [-1, -5]},
+								"west": {"uv": [16, 11], "uv_size": [-5, -1]},
 								"up": {"uv": [4, 12], "uv_size": [1, 5]},
-								"down": {"uv": [4, 12], "uv_size": [1, 5]}
+								"down": {"uv": [4, 17], "uv_size": [1, -5]}
 							}
 						},
 						{
@@ -112,11 +112,11 @@
 							"rotation": [0, 22.5, 0],
 							"uv": {
 								"north": {"uv": [12, 16], "uv_size": [-1, -5]},
-								"east": {"uv": [12, 16], "uv_size": [-1, -5]},
+								"east": {"uv": [16, 11], "uv_size": [-5, -1]},
 								"south": {"uv": [12, 16], "uv_size": [-1, -1]},
-								"west": {"uv": [12, 16], "uv_size": [-1, -5]},
+								"west": {"uv": [16, 10], "uv_size": [-5, -1]},
 								"up": {"uv": [11, 11], "uv_size": [1, 5]},
-								"down": {"uv": [11, 11], "uv_size": [1, 5]}
+								"down": {"uv": [11, 16], "uv_size": [1, -5]}
 							}
 						},
 						{

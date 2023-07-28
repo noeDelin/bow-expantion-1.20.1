@@ -4,6 +4,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -24,6 +26,7 @@ import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import net.nonopaddle.bow_expansion.item.Longbow;
 import net.nonopaddle.bow_expansion.LongbowRenderer;
+import net.nonopaddle.bow_expansion.entity.custom.BoltEntity;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.RenderProvider;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -45,6 +48,8 @@ public class Longbow extends BowItem implements GeoItem {
 
    private AtomicBoolean pulling = new AtomicBoolean(false);
 
+   private PlayerEntity user;
+
    public Longbow(Settings settings) {
       super(settings);
    }
@@ -52,6 +57,10 @@ public class Longbow extends BowItem implements GeoItem {
    @Override
    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
       this.pulling.set(false);
+
+      ServerTickEvents.END_SERVER_TICK.register(register -> {
+         System.out.println();
+      });
 
       if (user instanceof PlayerEntity playerEntity) {
          boolean bl = playerEntity.getAbilities().creativeMode
@@ -67,10 +76,12 @@ public class Longbow extends BowItem implements GeoItem {
             if (!((double) f < 0.2)) {
                boolean bl2 = bl && itemStack.isOf(Items.ARROW);
                if (!world.isClient) {
-                  ArrowItem arrowItem = (ArrowItem) (itemStack.getItem() instanceof ArrowItem ? itemStack.getItem()
-                        : Items.ARROW);
-                  PersistentProjectileEntity persistentProjectileEntity = arrowItem.createArrow(world, itemStack,
+                  BoltItem arrowItem = (BoltItem) (itemStack.getItem() instanceof BoltItem ? itemStack.getItem()
+                        : ModItems.BOLT_ITEM);
+                  PersistentProjectileEntity persistentProjectileEntity = arrowItem.createBolt(world, itemStack,
                         playerEntity);
+                  
+                  MinecraftClient.getInstance().setCameraEntity(persistentProjectileEntity);
                   persistentProjectileEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(),
                         0.0F, f * 3.0F, 1.0F);
                   if (f == 2.0F) {
@@ -121,6 +132,7 @@ public class Longbow extends BowItem implements GeoItem {
 
    @Override
    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+      this.user = user;
       this.pulling.set(true);
       return super.use(world, user, hand);
    }
@@ -165,18 +177,20 @@ public class Longbow extends BowItem implements GeoItem {
    @Override
    public void registerControllers(ControllerRegistrar controller) {
       this.animationController = new AnimationController<Longbow>(this, "controller", 0,
-         this::predicate);
+            this::predicate);
       controller.add(animationController);
    }
 
    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
-      if(this.pulling.get()) {
-         tAnimationState.getController()
-            .setAnimation(RawAnimation.begin().then("longbow.animation.draw", Animation.LoopType.PLAY_ONCE));
-         return PlayState.CONTINUE;
+      if (this.pulling.get()) {
+         if(this.user != null && this.user.getActiveItem().getItem() instanceof Longbow) {
+            tAnimationState.getController()
+               .setAnimation(RawAnimation.begin().then("longbow.animation.draw", Animation.LoopType.HOLD_ON_LAST_FRAME));
+            return PlayState.CONTINUE;
+         }
       }
       tAnimationState.getController()
-            .setAnimation(RawAnimation.begin().then("longbow.animation.shoot", Animation.LoopType.PLAY_ONCE));
+            .setAnimation(RawAnimation.begin().then("longbow.animation.shoot", Animation.LoopType.HOLD_ON_LAST_FRAME));
       return PlayState.CONTINUE;
    }
 

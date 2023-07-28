@@ -1,5 +1,6 @@
 package net.nonopaddle.bow_expansion.entity.custom;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,7 +20,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.animation.AnimatableManager.ControllerRegistrar;
 import software.bernie.geckolib.core.object.PlayState;
 
-public class BoltEntity extends ArrowEntity implements GeoEntity{
+public class BoltEntity extends ArrowEntity implements GeoEntity {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private AnimationController<BoltEntity> animationController;
@@ -55,7 +56,10 @@ public class BoltEntity extends ArrowEntity implements GeoEntity{
     @Override
     public void tick() {
         super.tick();
-        if(inGroundTime > 2) this.discard();
+        if(inGroundTime > 2) {
+            MinecraftClient.getInstance().setCameraEntity(MinecraftClient.getInstance().player);
+            this.discard();
+        };
     }
 
     @Override
