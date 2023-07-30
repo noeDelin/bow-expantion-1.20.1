@@ -1,6 +1,6 @@
 package net.nonopaddle.bow_expansion.entity.custom;
 
-import net.minecraft.client.MinecraftClient;
+
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,6 +24,9 @@ public class BoltEntity extends ArrowEntity implements GeoEntity {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private AnimationController<BoltEntity> animationController;
+
+    private boolean onTarget = false;
+    private int onTargetTime = 0;
     
     public BoltEntity(EntityType<? extends ArrowEntity> entityType, World world) {
         super(entityType, world);
@@ -57,9 +60,17 @@ public class BoltEntity extends ArrowEntity implements GeoEntity {
     public void tick() {
         super.tick();
         if(inGroundTime > 2) {
-            MinecraftClient.getInstance().setCameraEntity(MinecraftClient.getInstance().player);
+            //MinecraftClient.getInstance().setCameraEntity(MinecraftClient.getInstance().player);
             this.discard();
         };
+
+        if(this.onTarget) {
+            if(this.onTargetTime > 2) {
+                this.discard();
+            } else {
+                this.onTargetTime++;
+            }
+        }
     }
 
     @Override
@@ -67,6 +78,12 @@ public class BoltEntity extends ArrowEntity implements GeoEntity {
         if (this.getWorld().isClient || !this.inGround && !this.isNoClip() || this.shake > 0) {
             return;
         }
+    }
+
+    @Override
+    public void onHit(LivingEntity target) {
+        this.onTarget = true;
+        super.onHit(target);
     }
 
     @Override

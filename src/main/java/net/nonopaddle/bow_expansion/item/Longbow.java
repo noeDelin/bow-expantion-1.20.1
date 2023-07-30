@@ -4,19 +4,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity.PickupPermission;
-import net.minecraft.item.ArrowItem;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
@@ -58,30 +53,27 @@ public class Longbow extends BowItem implements GeoItem {
    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
       this.pulling.set(false);
 
-      ServerTickEvents.END_SERVER_TICK.register(register -> {
-         System.out.println();
-      });
-
       if (user instanceof PlayerEntity playerEntity) {
          boolean bl = playerEntity.getAbilities().creativeMode
                || EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) > 0;
          ItemStack itemStack = playerEntity.getProjectileType(stack);
+         System.out.println(stack.toString() + " - " + itemStack.toString());
          if (!itemStack.isEmpty() || bl) {
             if (itemStack.isEmpty()) {
-               itemStack = new ItemStack(Items.ARROW);
+               itemStack = new ItemStack(ModItems.BOLT_ITEM);
             }
 
             int i = this.getMaxUseTime(stack) - remainingUseTicks;
             float f = getPullProgress(i);
             if (!((double) f < 0.2)) {
-               boolean bl2 = bl && itemStack.isOf(Items.ARROW);
+               boolean bl2 = bl && itemStack.isOf(ModItems.BOLT_ITEM);
                if (!world.isClient) {
-                  BoltItem arrowItem = (BoltItem) (itemStack.getItem() instanceof BoltItem ? itemStack.getItem()
+                  BoltItem boltItem = (BoltItem) (itemStack.getItem() instanceof BoltItem ? itemStack.getItem()
                         : ModItems.BOLT_ITEM);
-                  PersistentProjectileEntity persistentProjectileEntity = arrowItem.createBolt(world, itemStack,
+                  BoltEntity persistentProjectileEntity = boltItem.createBolt(world, itemStack,
                         playerEntity);
                   
-                  MinecraftClient.getInstance().setCameraEntity(persistentProjectileEntity);
+                  //MinecraftClient.getInstance().setCameraEntity(persistentProjectileEntity);
                   persistentProjectileEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(),
                         0.0F, f * 3.0F, 1.0F);
                   if (f == 2.0F) {
@@ -106,8 +98,7 @@ public class Longbow extends BowItem implements GeoItem {
                   stack.damage(1, playerEntity, (p) -> {
                      p.sendToolBreakStatus(playerEntity.getActiveHand());
                   });
-                  if (bl2 || playerEntity.getAbilities().creativeMode
-                        && (itemStack.isOf(Items.SPECTRAL_ARROW) || itemStack.isOf(Items.TIPPED_ARROW))) {
+                  if (bl2 || playerEntity.getAbilities().creativeMode) {
                      persistentProjectileEntity.pickupType = PickupPermission.CREATIVE_ONLY;
                   }
 

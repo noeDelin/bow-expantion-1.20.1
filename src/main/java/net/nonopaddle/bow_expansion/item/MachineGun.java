@@ -18,6 +18,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
+import net.nonopaddle.bow_expansion.entity.ModPlayerEntity;
 import net.nonopaddle.bow_expansion.rendering.MachineGunRenderer;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.RenderProvider;
@@ -38,7 +39,7 @@ public class MachineGun extends BowItem implements /* Runnable, */ GeoItem {
     private int interval = 40; // millis
 
     private World world;
-    private LivingEntity user;
+    private ModPlayerEntity user;
     private Hand hand;
     private ItemStack itemStack;
     private int nbLoadedBolts;
@@ -55,8 +56,9 @@ public class MachineGun extends BowItem implements /* Runnable, */ GeoItem {
         this.rendererProvider = GeoItem.makeRenderer(this);
 
         ServerTickEvents.END_SERVER_TICK.register(server -> {
-            PlayerEntity player = (PlayerEntity) user;
+            ModPlayerEntity player = (ModPlayerEntity) user;
             if (this.running.get() && this.nbLoadedBolts > 0) {
+                this.itemStack = this.user.getProjectileType(this.user.getActiveItem());
                 if (server.getTicks() % interval == 0 && interval <= 2) {
                     // System.out.println("interval = " + interval);
                     if (!(player.getStackInHand(this.hand).getItem() instanceof MachineGun))
@@ -100,39 +102,19 @@ public class MachineGun extends BowItem implements /* Runnable, */ GeoItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         this.world = world;
-        this.user = user;
+        this.user = new ModPlayerEntity(world, user.getBlockPos(), user.getYaw(), user.getGameProfile());
         this.hand = hand;
         this.running.set(true);
 
-        if (user.isSneaking()) {
-            System.out.println("loading...");
-            int index = user.getInventory().indexOf(new ItemStack(ModItems.BOLT_ITEM));
-            if(index != -1) this.itemStack = user.getInventory().getStack(index);
-            /* int stackPos = 0;
-            boolean found = false;
-            while (!found && stackPos > user.getInventory().size()) {
-                if (user.getInventory().getStack(stackPos).getItem() instanceof BoltItem) {
-                    found = true;
-                } else {
-                    stackPos++;
-                }
-            } */
-            System.out.println("stack found : " + this.itemStack != null);
-            if (this.itemStack != null && this.itemStack.getItem() instanceof BoltItem) {
-                //this.itemStack.decrement(1);
-                this.nbLoadedBolts++;
-            }
-            System.out.println("nb bolts : " + this.nbLoadedBolts);
-        } else {
-            System.out.println("Shooting");
-            boolean bl;
-            ItemStack itemStack = user.getStackInHand(hand);
-            bl = !user.getProjectileType(itemStack).isEmpty();
-            if (user.getAbilities().creativeMode || bl) {
-                user.setCurrentHand(hand);
-                return TypedActionResult.consume(itemStack);
-            }
+        System.out.println("Shooting");
+        boolean bl;
+        ItemStack itemStack = this.user.getStackInHand(hand);
+        bl = !this.user.getProjectileType(itemStack).isEmpty();
+        if (this.user.getAbilities().creativeMode || bl) {
+            this.user.setCurrentHand(hand);
+            return TypedActionResult.consume(itemStack);
         }
+
         return TypedActionResult.fail(itemStack);
     }
 

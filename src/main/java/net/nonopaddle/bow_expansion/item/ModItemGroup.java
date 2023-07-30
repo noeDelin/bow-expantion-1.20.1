@@ -25,9 +25,10 @@ public class ModItemGroup {
     );
 
     public static void registerItemGroups() {
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register((entries) -> {
+        /* ItemGroupEvents.MODIFY_ENTRIES_ALL.invoker().modifyEntries().;
+        modifyEntriesEvent(Registries.ITEM_GROUP.).register((entries) -> {
             //entries.add(ModItems.EXEMPLE_DE_BLOCK);
-        });
+        }); */
     }
     
     
